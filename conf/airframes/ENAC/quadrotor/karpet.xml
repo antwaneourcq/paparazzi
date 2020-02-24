@@ -28,10 +28,9 @@
       <define name="DSHOT_SPEED" value="300"/>
     </module>
 
-    <!--module name="light_scheduller">
-      <define name="WS2812_LED_N" value="4"/>
-      <define name="WS2812_PORT" value="PPM_IN"/>
-    </modulei-->
+    <module name="light_scheduler">
+      <define name="WS2812_NB_LEDS" value="12"/>
+    </module>
 
     <module name="gps" type="datalink">
       <configure name="USE_MAGNETOMETER" value="FALSE"/>

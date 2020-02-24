@@ -6,8 +6,8 @@
     * Autopilot:   Tawaki
     * Actuators:   4 in 4 Holybro BLHELI ESC
     * Telemetry:   XBee
-    * GPS:         datalink
-    * RC:          datalink
+    * GPS:         ublox M8P
+    * RC:          xbee
   </description>
 
   <firmware name="rotorcraft">

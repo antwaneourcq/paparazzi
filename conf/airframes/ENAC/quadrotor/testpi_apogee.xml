@@ -14,8 +14,10 @@
     <configure name="PERIODIC_FREQUENCY" value="1000"/>
     <configure name="AHRS_PROPAGATE_FREQUENCY" value="$(PERIODIC_FREQUENCY)"/>
 
-    <target name="ap" board="tawaki_1.0">
-    <module name="radio_control" type="datalink"/>
+    <configure name="KILL_AS_FAILSAFE" value="1"/>
+
+    <target name="ap" board="apogee_1.0_chibios">
+      <module name="radio_control" type="datalink"/>
       <configure name="BARO_PERIODIC_FREQUENCY" value="50"/>
     </target>
 
@@ -25,26 +27,32 @@
     </target>
 
 
-    <module name="telemetry" type="transparent">
+    <module name="telemetry" type="xbee_api"/>
+    <!--module name="telemetry" type="xbee_api">
       <configure name="MODEM_BAUD" value="B115200"/>
-      <configure name="MODEM_PORT" value="UART2"/>
-    </module>
+      <configure name="MODEM_PORT" value="UART1"/>
+    </module-->
 
     <module name="actuators" type="dshot">
       <!--define name="DSHOT_SPEED" value="300"/-->
     </module>
 
-    <module name="board" type="tawaki">
+    <!--module name="board" type="tawaki">
       <define name="IMU_MPU_LOWPASS_FILTER" value="MPU60X0_DLPF_256HZ"/>
       <define name="IMU_MPU_ACCEL_LOWPASS_FILTER" value="MPU60X0_DLPF_ACC_218HZ"/>
       <define name="IMU_MPU_SMPLRT_DIV" value="0"/>
-    </module>
-
-    <module name="light_scheduler">
-      <define name="WS2812_NB_LEDS" value="12"/>
-    </module>
+    </module-->
 
     <module name="gps" type="datalink"/>
+    <module name="imu" type="apogee"/>
+
+    <module name="air_data"/>
+    <!--module name="compagnon_interface"/-->
+    <module name="extra_dl">
+      <configure name="EXTRA_DL_PORT" value="UART6"/>
+      <configure name="EXTRA_DL_BAUD" value="B115200"/>
+    </module>
+
 
     <module name="stabilization" type="int_quat"/>
 
@@ -53,12 +61,12 @@
       <configure name="USE_MAGNETOMETER" value="FALSE"/>
     </module>
 
-    <module name="air_data"/>
 
-    <module name="filter" type="1euro_imu">
+
+    <!--module name="filter" type="1euro_imu">
       <define name="AHRS_ICQ_IMU_ID" value="IMU_F1E_ID"/>
       <define name="AHRS_ALIGNER_IMU_ID" value="IMU_F1E_ID"/>
-    </module>
+    </module-->
 
     <module name="motor_mixing"/>
 
@@ -70,10 +78,10 @@
   </firmware>
 
   <servos driver="DShot">
-    <servo name="FR" no="2" min="0" neutral="100" max="2000"/>
-    <servo name="BR" no="4" min="0" neutral="100" max="2000"/>
-    <servo name="BL" no="3" min="0" neutral="100" max="2000"/>
-    <servo name="FL" no="1" min="0" neutral="100" max="2000"/>
+    <servo name="FR" no="1" min="0" neutral="100" max="2000"/>
+    <servo name="BR" no="3" min="0" neutral="100" max="2000"/>
+    <servo name="BL" no="4" min="0" neutral="100" max="2000"/>
+    <servo name="FL" no="2" min="0" neutral="100" max="2000"/>
   </servos>
 
   <commands>
