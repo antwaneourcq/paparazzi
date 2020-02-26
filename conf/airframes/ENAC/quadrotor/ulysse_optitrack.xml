@@ -292,7 +292,8 @@
 
   <section name="TARGET_LOC" prefix="TARGET_LOC_">
     <define name="BODY_TO_CAM_PSI" value="0."/>
-    <define name="CAM_POS_Y" value="-0.1"/>
+    <define name="CAM_POS_Y" value="0.1"/>
+    <define name="CAM_POS_X" value="0."/>
     <define name="PIXEL_TO_IMAGE_X" value="0.44/1000."/>
     <define name="PIXEL_TO_IMAGE_Y" value="0.44/1000."/>
     <define name="WP_T1" value="WP_TARGET"/>
