@@ -1,0 +1,16 @@
+<!DOCTYPE module SYSTEM "module.dtd">
+
+<module name="compagnon_interface">
+  <doc>
+    <description>Compagnon board interface</description>
+  </doc>
+  <header>
+    <file name="compagnon_interface.h"/>
+  </header>
+  <init fun="init_compagnon_interface()"/>
+  <periodic fun="compagnon_interface_send()" freq="10."/>
+  <makefile target="ap">
+    <file name="compagnon_interface.c"/>
+  </makefile>
+</module>
+
