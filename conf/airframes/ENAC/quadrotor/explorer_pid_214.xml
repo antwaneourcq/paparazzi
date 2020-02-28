@@ -5,19 +5,26 @@
   <description>
     * Autopilot:   Tawaki
     * Actuators:   4 in 4 Holybro BLHELI ESC
-    * Telemetry:   XBee
-    * GPS:         ublox M8P
-    * RC:          FrSky XM+
+    * Telemetry:   XBee and Wifibroadcast (compagnon board)
+    * GPS:         ublox M8P and Datalink
+    * RC:          FrSky XM+ and Datalink
   </description>
 
   <firmware name="rotorcraft">
     <configure name="PERIODIC_FREQUENCY" value="1000"/>
     <configure name="AHRS_PROPAGATE_FREQUENCY" value="$(PERIODIC_FREQUENCY)"/>
 
+    <configure name="KILL_AS_FAILSAFE" value="1"/>
+
     <target name="ap" board="tawaki_1.0">
-      <module name="radio_control" type="sbus"/>
       <configure name="BARO_PERIODIC_FREQUENCY" value="50"/>
+
+      <!-- Configuration INDOOR -->
+      <!--module name="radio_control" type="datalink"/-->
+      <!-- Configuration OUTDOOR -->
+      <module name="radio_control" type="sbus"/>
       <define name="RADIO_KILL_SWITCH" value="RADIO_GAIN1"/>
+
     </target>
 
     <target name="nps" board="pc">
@@ -40,10 +47,6 @@
 
     <module name="actuators" type="dshot"/>
 
-    <module name="gps" type="ublox">
-      <configure name="GPS_BAUD" value="B115200"/>
-      <define name="USE_GPS_UBX_RTCM" value="TRUE"/>
-    </module>
 
     <module name="light_scheduler">
       <define name="WS2812_NB_LEDS" value="12"/>
@@ -51,8 +54,20 @@
 
     <module name="stabilization" type="int_quat"/>
 
-    <module name="ins"/>
-    <module name="ahrs" type="int_cmpl_quat"/>
+    <!-- Configuration INDOOR -->
+    <!--module name="gps" type="datalink"/>
+    <module name="ins" type="gps_passthrough"/>
+    <module name="ahrs" type="int_cmpl_quat">
+      <configure name="USE_MAGNETOMETER" value="FALSE"/>
+    </module-->
+    <!-- Configuration OUTDOOR -->
+    <module name="gps" type="ublox">
+      <configure name="GPS_BAUD" value="B115200"/>
+      <define name="USE_GPS_UBX_RTCM" value="TRUE"/>
+    </module>
+    <module name="ins" />
+    <module name="ahrs" type="int_cmpl_quat" />
+
 
     <module name="air_data"/>
 
@@ -148,6 +163,12 @@
       Result(0.576084, -0.00275807, 0.817385)
   -->
 
+  <!-- Configuration INDOOR  -->
+  <!--section name="AHRS" prefix="AHRS_">
+    <define name="USE_GPS_HEADING" value="1"/>
+    <define name="HEADING_UPDATE_GPS_MIN_SPEED" value="0"/>
+  </section-->
+  <!-- Configuration OUTDOOR -->
   <!-- Firmware Option (1) --> 
   <section name="INS" prefix="INS_"/>
   <section name="AHRS" prefix="AHRS_">
@@ -155,7 +176,6 @@
     <define name="H_Y" value="0.00299"/>
     <define name="H_Z" value="0.85787"/>
   </section>   
-
   <!-- Firmware Option (2) -->
   <!--section name="INS" prefix="INS_">
     <define name="H_X" value="0.576084"/>
